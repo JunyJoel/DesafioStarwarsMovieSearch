@@ -7,17 +7,17 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
 
-public class Main {
+public class Principal {
     public static void main(String[] args) throws IOException, InterruptedException {
-//        System.out.println("Hola Mundirijillo");
+        //System.out.println("Hola Mundirijillo");
         Scanner keyboardInput = new Scanner(System.in);
         System.out.println("Escriba numero de episodio");
-        Integer episodio = keyboardInput.nextInt();
+        //Integer episodio = keyboardInput.nextInt();
 
-        System.out.println("Elegiste el episodio " + episodio);
+        /*System.out.println("Elegiste el episodio " + episodio);
 
         String clave = "SinClave";
-        String url = "https://swapi.py4e.com/api/films/";
+        String uri = "https://swapi.py4e.com/api/films/";
         String direccion = url + episodio + "/";
 
         try {
@@ -40,6 +40,22 @@ public class Main {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }*/
+
+        ConsultaPelicula consulta = new ConsultaPelicula();
+
+        try{
+            var numeroDePelicula = keyboardInput.nextLine();
+            Pelicula pelicula = consulta.buscaPelicula(Integer.valueOf(numeroDePelicula));
+            System.out.println(pelicula);
+            GeneradorDeArchivo generador = new GeneradorDeArchivo();
+            generador.guardarJson(pelicula);
+        } catch (NumberFormatException e){
+            System.out.println("Numero no encontrado " + e.getMessage());
+        } catch(RuntimeException | IOException e){
+            System.out.println(e.getMessage());
+        }finally {
+            System.out.println("Finalizando la aplicacion...");
         }
 
     }
